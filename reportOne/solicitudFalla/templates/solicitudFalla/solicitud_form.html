@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4 position-relative">
+
+    <!-- Fondo -->
+    <div style="
+        background: url('{% static "/solicitudes/img/bg-transparent.png" %}') center/cover no-repeat;
+        opacity: 0.08;
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+    "></div>
+
+    <div class="card shadow-sm p-4 col-md-5 mx-auto">
+        <h3 class="text-center border-line fw-semibold pb-2 mb-4">
+            {{ form.instance.pk|yesno:"Editar solicitud,Nueva solicitud" }}
+        </h3>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <!-- Nombre del activo -->
+            <div class="mb-3">
+                <label class="form-label">{{ form.nombre_activo.label }}</label>
+                {{ form.nombre_activo }}
+                <div class="text-danger small">{{ form.nombre_activo.errors }}</div>
+            </div>
+
+            <!-- Sistema afectado -->
+            <div class="mb-3">
+                <label class="form-label">{{ form.sistema_afectado.label }}</label>
+                {{ form.sistema_afectado }}
+                <div class="text-danger small">{{ form.sistema_afectado.errors }}</div>
+            </div>
+
+            <!-- Descripción -->
+            <div class="mb-3">
+                <label class="form-label">{{ form.descripcion.label }}</label>
+                {{ form.descripcion }}
+                <div class="text-danger small">{{ form.descripcion.errors }}</div>
+            </div>
+
+            <!-- Criticidad -->
+            <div class="mb-3">
+                <label class="form-label">{{ form.criticidad.label }}</label>
+                {{ form.criticidad }}
+                <div class="text-danger small">{{ form.criticidad.errors }}</div>
+            </div>
+
+            <!-- Acción requerida -->
+            <div class="mb-3">
+                <label class="form-label">{{ form.accion_requerrida.label }}</label>
+                {{ form.accion_requerrida }}
+                <div class="text-danger small">{{ form.accion_requerrida.errors }}</div>
+            </div>
+
+            <!-- Estado -->
+            <div class="mb-3">
+                <label class="form-label">{{ form.estado.label }}</label>
+                {{ form.estado }}
+                <div class="text-danger small">{{ form.estado.errors }}</div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success w-100">Guardar</button>
+                <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary w-100">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

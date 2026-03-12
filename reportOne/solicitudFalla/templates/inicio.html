@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Título del sistema -->
+    <div class="text-center mb-4">
+        <h1>{{ sistema }}</h1>
+        <p class="text-muted">{{ descripcion }}</p>
+    </div>
+
+    <!-- Tarjetas resumen -->
+    <div class="row text-center">
+
+        <!-- Total solicitudes -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Total Solicitudes</h5>
+                    <h2>{{ total_solicitudes }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Acceso rápido -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Nueva Solicitud</h5>
+                    <a href="{% url 'solicitudes:nuevo' %}" class="btn btn-primary">
+                        Crear
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ver listado -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Ver Solicitudes</h5>
+                    <a href="{% url 'solicitudes:lista' %}" class="btn btn-success">
+                        Ir al listado
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Últimas solicitudes -->
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header">
+            Últimas solicitudes registradas
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for s in ultimas_solicitudes %}
+                    <li class="list-group-item">
+                        Solicitud #{{ s.id }}
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted">
+                        No hay solicitudes registradas
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-image: url("/static/solicitudes/img/bg-transparent.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    font-family: sans-serif;
+    }
+
+    .table td, .table th {
+    vertical-align: middle;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    min-height: 150px;
+}
+
+h3.border-line::after {
+    content: "";
+    display: block;
+    width: 230px;
+    height: 3px;
+    margin: 8px auto 0;
+    background: #0D6EFD;   /* verde Bootstrap */
+    border-radius: 2px;
+}
+
+input, textarea, select{
+    border: none;
+    border-left: 3px solid #999;
+    box-shadow: 0 0 10px #0005;
+    border-radius: 3px;
+}
+
+label{
+    font-weight: bold;
+}

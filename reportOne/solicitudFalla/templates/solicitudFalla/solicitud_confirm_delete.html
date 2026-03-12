@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-4 position-relative">
+
+    <!-- Fondo suave -->
+    <div style="
+        background: url('{% static "solicitudes/img/bg-transparent.png" %}') center/cover no-repeat;
+        opacity: 0.06;
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+    "></div>
+
+    <div class="card shadow-sm p-4 col-md-5 mx-auto text-center">
+
+        <h3 class="text-center border-bottom pb-2 mb-3 text-danger">
+            Eliminar solicitud
+        </h3>
+
+        <p class="mb-4">
+            ¿Seguro que quieres eliminar la solicitud 
+            <strong>{{ object.codigo }}</strong>?
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger w-100">
+                    Sí, eliminar
+                </button>
+
+                <a href="{% url 'solicitudes:lista' %}" class="btn btn-secondary w-100">
+                    Cancelar
+                </a> 
+            </div>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="container py-4">
+    <h1>Lista de solicitudes</h1>
+    <a href="{% url 'solicitudes:nuevo' %}" class="btn btn-primary mb-3">Nueva solicitud</a>
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        <th>Codigo</th><th>Sistema</th><th>Descripcion</th><th>Criticidad</th><th>Estado</th><th>Fecha Creacion</th><th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in solicitudes %}
+        <tr>
+        <td>{{ p.codigo }}</td>
+        <td>{{ p.sistema_afectado }}</td>
+        <td>{{ p.descripcion }}</td>
+        <td>{{ p.criticidad }}</td>
+        <td>{{ p.estado }}</td>
+        <td>{{ p.fecha_creacion }}</td>
+        <td>
+            <a href="{% url 'solicitudes:editar' p.pk %}" class="btn btn-sm btn-warning">Editar</a>
+            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" data-pk="{{ p.pk }}" data-nombre="{{ p.nombre }}">
+            Eliminar
+            </button>
+        </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+    <!-- Paginación -->
+    <nav aria-label="Page navigation"> 
+    <ul class="pagination justify-content-center">
+        {% if solicitudes.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ solicitudes.previous_page_number }}">&laquo; Anterior</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">&laquo; Anterior</span></li>
+        {% endif %}
+        {% for num in solicitudes.paginator.page_range %}
+        {% if solicitudes.number == num %}
+        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+        {% elif num >= solicitudes.number|add:-2 and num <= solicitudes.number|add:2 %}
+        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if solicitudes.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ solicitudes.next_page_number }}">Siguiente &raquo;</a></li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Siguiente &raquo;</span></li>
+        {% endif %}
+    </ul>
+    </nav>
+    </div>
+
+    <!-- Modal de confirmación de eliminación -->
+    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <form method="post" id="deleteForm">
+        {% csrf_token %}
+        <div class="modal-header">
+            <h5 class="modal-title" id="confirmDeleteLabel">Confirmar eliminación</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+            ¿Estás seguro de que deseas eliminar <strong id="modalSolicitudName"></strong>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+        </form>
+    </div>
+    </div>
+    </div>
+
+    <!-- Script para manejar modal -->
+    <script>
+    var deleteModal = document.getElementById('confirmDeleteModal')
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget
+    var pk = button.getAttribute('data-pk')
+    var name = button.getAttribute('data-nombre')
+    var form = deleteModal.querySelector('#deleteForm')
+    form.action = "{% url 'solicitudes:eliminar' '0' %}".replace('0', pk)
+    deleteModal.querySelector('#modalSolicitudName').textContent = name
+    })
+    </script>
+
+
+{% endblock %}

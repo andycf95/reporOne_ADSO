@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "G:/Mi unidad/Material de estudio/Analisis y desarrollo de sofware/Documentacion ReportOne/Programacion/Practicas_HTML"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "Practicas_HTML",
+		"git.ignoreLimitWarning": true
+	}
+}
